@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found</title>
+    <meta name="description" content="" />
+
+    <meta property="og:title" content="404 Page not found" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content="" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="icon.png" />
+
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#fafafa" />
+  </head>
+
+  <body>
+    <style>
+      body {
+        margin: 0;
+        background-color: black;
+        display: grid;
+        align-content: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+      }
+      video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        object-position: center;
+        z-index: 1;
+        display: none;
+      }
+      video::-webkit-media-controls {
+        display: none;
+      }
+      #playButton {
+        max-height: 2rem;
+        max-width: 4rem;
+      }
+    </style>
+    <button id="playButton" onclick="nuke()">Activate</button>
+    <video id="marioVideo" controls="hidden" playsinline>
+      <source src="./mario.mp4" type="video/mp4" />
+    </video>
+    <script>
+      var elem = document.getElementById("marioVideo");
+
+      function openFullscreen() {
+        if (elem.requestFullscreen) {
+          elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+          /* Safari */
+          elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+          /* IE11 */
+          elem.msRequestFullscreen();
+        }
+      }
+
+      function nuke(e) {
+        openFullscreen();
+        document.getElementById("marioVideo").play();
+        document.getElementById("playButton").style.display = "none";
+
+        document.getElementById("marioVideo").style.display = "block";
+      }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        document.getElementById("marioVideo").play();
+
+        var promise = document.getElementById("marioVideo").play();
+        if (promise !== undefined) {
+          promise
+            .then((_) => {
+              // Autoplay started!
+
+              document.getElementById("playButton").style.display = "none";
+
+              document.getElementById("marioVideo").style.display = "block";
+            })
+            .catch((error) => {
+              // Autoplay was prevented.
+              // Show a "Play" button so that user can start playback.
+            });
+        }
+      });
+
+      document
+        .getElementById("marioVideo")
+        .addEventListener("ended", myHandler, false);
+      function myHandler(e) {
+        window.close();
+      }
+    </script>
+  </body>
+</html>
